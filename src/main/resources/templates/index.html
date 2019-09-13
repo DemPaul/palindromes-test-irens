@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Middle Java test from Irens</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../../css/main.css"/>
+</head>
+
+<body>
+<div class="container mt-3 p-2">
+
+    <div class="col">
+        <h1 align="center" class="col-sm m-1 p-2">Java test from Irens</h1>
+    </div>
+
+    <div class="row justify-content-around">
+        <div class="col-sm m-5 p-5 rounded border border-primary bg-light text-black shadow">
+            <h3 class="mb-4">Find Palindromic Numbers</h3>
+
+            <form th:action="@{/}" th:object="${parentNumber}" method="post">
+                <div class="form-group">
+                    <label for="value">Number</label>
+                    <input type="number" name="value" th:value="${parentNumber.value}" id="value"
+                           class="form-control input-lg w-75"
+                           placeholder="Enter number" autofocus/>
+                    <p class="error" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></p>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="numberOfPalindromes">Number of palindromes</label>
+                    <input type="number" name="numberOfPalindromes"
+                           th:value="${parentNumber.numberOfPalindromes}" id="numberOfPalindromes"
+                           class="form-control input-lg w-75"
+                           placeholder="Enter number of palindromes"/>
+                    <p class="error" th:if="${#fields.hasErrors('numberOfPalindromes')}"
+                       th:errors="*{numberOfPalindromes}"></p>
+                </div>
+
+                <div class="col-6 p-0">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Find"/>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm d-inline-block m-5 p-5 w-100 rounded border border-primary bg-light text-black shadow">
+            <h2 class="mb-4">History</h2>
+            <div th:if="${not #lists.isEmpty(numbers)}"
+                 class="nav nav-pills nav-stacked scroll-block">
+                <div class="container-fluid mb-5 mr-5 p-4 rounded border border-secondary shadow-sm"
+                     th:each="number: ${numbers} ">
+
+                    <h5 class="col-sm">Number: <span th:text="${number.value}"> </span></h5>
+                    <div class="row" th:if="${#lists.isEmpty(number.palindromes)}">
+                        <div class="col-sm ml-2">
+                            <p class="ml-2">Computing...</p>
+                            <meta http-equiv="refresh" content="1">
+                        </div>
+                        <div class="col-sm d-flex flex-row-reverse">
+                            <p class="mb-0"></p>
+                            <form th:action="@{/}" method="get">
+                                <button type="submit" class="btn btn-primary">
+                                    Result
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div th:if="${not #lists.isEmpty(number.palindromes)}"
+                         class="col-sm m-1 p-0">
+                        <div class="d-flex flex-row-reverse">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                    th:data-target="'#myForm' + ${number.id}"
+                                    aria-expanded="false">
+                                Result
+                            </button>
+                        </div>
+                        <div class="col-sm mt-4 collapse" th:id="'myForm' + ${number.id}">
+                            <div class="card card-body">
+                                <h5>Min palindrome: <span
+                                        th:text="${number.getMin()}"> </span></h5>
+                                <h5>Max palindrome: <span
+                                        th:text="${number.getMax()}"> </span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $('#PageRefresh').click(function () {
+
+            location.reload();
+
+        });
+
+    </script>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</div>
+
+<div class="col footer" th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

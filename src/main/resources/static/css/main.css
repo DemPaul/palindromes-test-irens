@@ -1,0 +1,26 @@
+h1{
+	color:#0066FF;
+}
+
+label{
+	font-size: 25px;
+}
+
+footer{
+	margin-top:10px;
+	font-size: 20px;
+}
+
+.error{
+	color: #FF0000;
+	font-weight: 600;
+	font-size: 18px;
+	margin-left:15px;
+	margin-top:10px;
+	margin-bottom:6px;
+}
+
+.scroll-block{
+	height: 330px;
+	overflow-y: scroll;
+}
